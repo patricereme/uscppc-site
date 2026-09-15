@@ -62,7 +62,7 @@ li { margin-bottom: .35rem; }
   padding: 0 1.25rem;
 }
 
-/* ---------- Liseré blanc au-dessus du bandeau (bonnet + Alpes 2030) ---------- */
+/* ---------- Liseré blanc au-dessus du bandeau (pub La Plagne + Alpes 2030) ---------- */
 .top-strip {
   background: #fff;
   border-bottom: 1px solid var(--border);
@@ -74,9 +74,10 @@ li { margin-bottom: .35rem; }
   padding: .3rem 1.25rem;
 }
 .top-strip img {
-  height: 30px;
+  height: 44px;
   width: auto;
   display: block;
+  border-radius: 3px;
 }
 .top-strip .olympic-text {
   font-size: .78rem;
