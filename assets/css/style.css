@@ -113,11 +113,19 @@ li { margin-bottom: .35rem; }
   width: auto;
 }
 .tab-bar .brand .acronym {
-  display: block;
+  display: inline;
   font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: .03em;
   color: #fff;
+}
+.tab-bar .brand .tagline {
+  display: inline;
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: rgba(255,255,255,.85);
+  margin-left: .4rem;
 }
 .tab-bar .brand .fullname { display: none; }
 .tab-bar nav {
