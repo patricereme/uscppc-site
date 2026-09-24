@@ -1,0 +1,24 @@
+:root{--rouge:#E20020;--navy:#1F3864;--navy-l:#2E4A7A;--orange:#F4B942;--bleu:#2E75B6;--bg-alt:#F5F7FA;--muted:#545B66;--border:#DDE3EC}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow:hidden;font-family:Calibri,Candara,"Segoe UI",Arial,sans-serif;color:#1A1A1A}
+.tag{display:inline-block;background:var(--orange);color:var(--navy);font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-radius:6px}
+/* Visuels de publication 1080x1080 */
+.post{width:1080px;height:1080px;display:flex;flex-direction:column;background:#fff}
+.post header{background:var(--navy);color:#fff;display:flex;align-items:center;gap:22px;padding:30px 60px}
+.post header .logo{width:74px;height:80px;background:#fff;border-radius:12px;padding:6px}
+.post header .acr{font-size:46px;font-weight:700;letter-spacing:.04em;line-height:1}
+.post header .full{font-size:21px;color:#D5DDEB;line-height:1.2;margin-top:4px}
+.post main{flex:1;padding:56px 60px 40px;display:flex;flex-direction:column}
+.post .tag{font-size:22px;padding:8px 16px;align-self:flex-start;margin-bottom:22px}
+.post h1{font-size:68px;line-height:1.05;color:var(--navy);margin-bottom:18px}
+.post .lede{font-size:30px;color:var(--muted);line-height:1.3;margin-bottom:34px}
+.post footer{background:var(--rouge);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:22px 60px;font-size:28px;font-weight:700}
+.post footer span:last-child{font-weight:400;font-size:24px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1}
+.stat{background:var(--bg-alt);border-left:10px solid var(--rouge);border-radius:10px;padding:34px 30px 26px;display:flex;flex-direction:column;justify-content:flex-start}
+.stat b{font-size:74px;color:var(--navy);line-height:1}
+.stat span{font-size:27px;color:var(--muted);line-height:1.25;margin-top:10px}
+.list{list-style:none;display:flex;flex-direction:column;gap:20px}
+.list li{font-size:31px;line-height:1.25;padding-left:44px;position:relative}
+.list li::before{content:"";position:absolute;left:0;top:9px;width:22px;height:22px;background:var(--rouge);border-radius:4px}
+.list li b{color:var(--navy)}
