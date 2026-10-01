@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><title>Vidéo portes galerie</title>
+<style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// Diaporama vertical 1080x1920 enregistré en MP4 (MediaRecorder), envoyé au serveur local par POST /save.
+const W = 1080, H = 1920, FPS = 30;
+const ROUGE = '#E20020', NAVY = '#1F3864', NAVY_L = '#2E4A7A', ORANGE = '#F4B942';
+const FONT = 'Calibri, Candara, "Segoe UI", Arial, sans-serif';
+const TITRE = "Rénovation de l'ensemble des portes de la galerie de Plagne Centre";
+const SOUS_TITRE = "Travaux de maintenance annuels de la galerie en intersaison";
+const PHOTOS = ['IMG_9182', 'IMG_9183', 'IMG_9185', 'IMG_9186', 'IMG_9187', 'IMG_9188', 'IMG_9189', 'IMG_9190', 'IMG_9192'];
+const T_INTRO = 4.5, T_PHOTO = 3.6, T_FONDU = 0.7, T_OUTRO = 4;
+const T_TOTAL = T_INTRO + PHOTOS.length * T_PHOTO + T_OUTRO;
+
+const c = document.getElementById('c'), ctx = c.getContext('2d');
+const load = src => new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = ko; i.src = src; });
+
+function wrap(text, maxW) {
+  const words = text.split(' '), lines = []; let line = '';
+  for (const w of words) {
+    const t = line ? line + ' ' + w : w;
+    if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+function textBlock(text, x, y, size, weight, color, maxW, lh, align = 'left') {
+  ctx.font = `${weight} ${size}px ${FONT}`; ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = 'top';
+  const lines = wrap(text, maxW);
+  lines.forEach((l, i) => ctx.fillText(l, x, y + i * size * lh));
+  return y + lines.length * size * lh;
+}
+function tag(text, x, y, size, align = 'left') {
+  ctx.font = `700 ${size}px ${FONT}`;
+  const w = ctx.measureText(text).width + size * 1.2, h = size * 1.7;
+  const x0 = align === 'center' ? x - w / 2 : x;
+  ctx.fillStyle = ORANGE; roundRect(x0, y, w, h, 10); ctx.fill();
+  ctx.fillStyle = NAVY; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+  ctx.fillText(text, x0 + size * 0.6, y + h / 2 + 2);
+  return y + h;
+}
+function roundRect(x, y, w, h, r) {
+  ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+}
+function logoBox(logo, x, y, s) {
+  ctx.fillStyle = '#fff'; roundRect(x, y, s, s * 1.08, s * 0.12); ctx.fill();
+  const p = s * 0.1; ctx.drawImage(logo, x + p, y + p, s - 2 * p, (s - 2 * p) * 130 / 120);
+}
+const ease = t => t < 0 ? 0 : t > 1 ? 1 : t * t * (3 - 2 * t);
+
+function drawPhoto(img, local, dir) {
+  // Zoom lent (effet Ken Burns) avec léger glissement alterné
+  const k = local / (T_PHOTO + T_FONDU);
+  const s = 1.04 + 0.08 * k, dx = dir * 30 * (k - 0.5);
+  const w = W * s, h = H * s;
+  ctx.drawImage(img, (W - w) / 2 + dx, (H - h) / 2, w, h);
+}
+function drawBands(logo, n) {
+  // Bandeau haut : titre
+  const g = ctx.createLinearGradient(0, 0, 0, 420);
+  g.addColorStop(0, 'rgba(31,56,100,.95)'); g.addColorStop(1, 'rgba(31,56,100,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, 420);
+  logoBox(logo, 60, 60, 90);
+  ctx.font = `700 44px ${FONT}`; ctx.fillStyle = '#fff'; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+  ctx.fillText('USCPPC', 172, 66);
+  ctx.font = `400 28px ${FONT}`; ctx.fillStyle = '#E7ECF5'; ctx.fillText('Travaux d\'intersaison · Galerie de Plagne Centre', 172, 118);
+  // Bandeau bas : rouge
+  ctx.fillStyle = ROUGE; ctx.fillRect(0, H - 110, W, 110);
+  ctx.font = `700 40px ${FONT}`; ctx.fillStyle = '#fff'; ctx.textBaseline = 'middle'; ctx.fillText('uscppc.fr', 60, H - 55);
+  ctx.font = `400 30px ${FONT}`; ctx.textAlign = 'right'; ctx.fillText(`${n} / ${PHOTOS.length}`, W - 60, H - 55);
+}
+function drawIntro(logo, bg, t) {
+  ctx.drawImage(bg, 0, 0, W, H);
+  ctx.fillStyle = 'rgba(31,56,100,.86)'; ctx.fillRect(0, 0, W, H);
+  const a = ease(t / 0.8); ctx.globalAlpha = a;
+  const off = (1 - a) * 40;
+  logoBox(logo, (W - 220) / 2, 330 + off, 220);
+  ctx.font = `700 96px ${FONT}`; ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.fillText('USCPPC', W / 2, 600 + off);
+  let y = tag("TRAVAUX D'INTERSAISON", W / 2, 740 + off, 34, 'center');
+  y = textBlock(TITRE, W / 2, y + 60 + off, 84, 700, '#fff', 920, 1.1, 'center');
+  ctx.fillStyle = ROUGE; ctx.fillRect(W / 2 - 80, y + 40, 160, 10);
+  textBlock(SOUS_TITRE, W / 2, y + 100, 48, 400, '#E7ECF5', 900, 1.25, 'center');
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = ROUGE; ctx.fillRect(0, H - 24, W, 24);
+}
+function drawOutro(logo, t) {
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, NAVY); g.addColorStop(1, NAVY_L);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  logoBox(logo, (W - 240) / 2, 480, 240);
+  ctx.font = `700 100px ${FONT}`; ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.fillText('USCPPC', W / 2, 780);
+  let y = textBlock('Union des Syndicats de Copropriétaires et Propriétaires de Plagne Centre', W / 2, 910, 44, 400, '#E7ECF5', 880, 1.25, 'center');
+  y = textBlock("Entretenir la galerie, saison après saison.", W / 2, y + 70, 50, 700, ORANGE, 900, 1.2, 'center');
+  ctx.fillStyle = ROUGE; ctx.fillRect(0, H - 200, W, 200);
+  ctx.font = `700 64px ${FONT}`; ctx.fillStyle = '#fff'; ctx.textBaseline = 'middle'; ctx.fillText('uscppc.fr', W / 2, H - 100);
+}
+
+function frame(t, logo, imgs) {
+  ctx.globalAlpha = 1;
+  const tp = t - T_INTRO, tEndPhotos = PHOTOS.length * T_PHOTO;
+  if (t < T_INTRO) {
+    drawIntro(logo, imgs[0], t);
+  } else if (tp < tEndPhotos) {
+    const i = Math.min(PHOTOS.length - 1, Math.floor(tp / T_PHOTO)), local = tp - i * T_PHOTO;
+    drawPhoto(imgs[i], local + T_FONDU, i % 2 ? -1 : 1);
+    if (i > 0 && local < T_FONDU) { ctx.globalAlpha = 1 - local / T_FONDU; drawPhoto(imgs[i - 1], T_PHOTO + T_FONDU, (i - 1) % 2 ? -1 : 1); ctx.globalAlpha = 1; }
+    drawBands(logo, i + 1);
+  } else {
+    drawOutro(logo, tp - tEndPhotos);
+  }
+  // Fondus d'entrée/sortie de séquence (intro -> photos, photos -> outro)
+  const cut = [T_INTRO, T_INTRO + tEndPhotos];
+  for (const x of cut) { const d = Math.abs(t - x); if (d < 0.35) { ctx.globalAlpha = 1 - d / 0.35; ctx.fillStyle = NAVY; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; } }
+}
+
+(async () => {
+  const logo = await load('../../assets/img/logo-icon.svg');
+  const imgs = await Promise.all(PHOTOS.map(p => load(`../photos/${p}.jpeg`)));
+  await document.fonts.ready;
+  const params = new URLSearchParams(location.search);
+  if (params.has('t')) { frame(parseFloat(params.get('t')), logo, imgs); return; } // aperçu d'une image fixe
+  const types = ['video/mp4;codecs=avc1.640028', 'video/mp4;codecs=avc1', 'video/mp4', 'video/webm;codecs=vp9', 'video/webm'];
+  const mime = types.find(m => MediaRecorder.isTypeSupported(m));
+  const rec = new MediaRecorder(c.captureStream(FPS), { mimeType: mime, videoBitsPerSecond: 10_000_000 });
+  const chunks = []; rec.ondataavailable = e => e.data.size && chunks.push(e.data);
+  rec.onstop = async () => {
+    const ext = mime.startsWith('video/mp4') ? 'mp4' : 'webm';
+    await fetch(`/save?name=renovation-portes-galerie.${ext}`, { method: 'POST', body: new Blob(chunks, { type: mime }) });
+    document.title = 'DONE';
+  };
+  frame(0, logo, imgs);
+  rec.start(1000);
+  const t0 = performance.now();
+  const tick = () => {
+    const t = (performance.now() - t0) / 1000;
+    if (t >= T_TOTAL) { frame(T_TOTAL - 0.001, logo, imgs); rec.stop(); return; }
+    frame(t, logo, imgs); setTimeout(tick, 1000 / FPS / 2);
+  };
+  tick();
+})();
+</script></body></html>
