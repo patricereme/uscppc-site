@@ -83,7 +83,7 @@ Publier dans cet ordre, puis **épingler la publication 1** (… → Épingler e
 
 > 🔥 La galerie de Plagne Centre est un établissement recevant du public (ERP). L'USCPPC en assure la direction unique de sécurité incendie, sous le contrôle du SDIS 73 et de la commission de sécurité.
 >
-> 481 détecteurs incendie, 56 caméras de vidéoprotection, 2 défibrillateurs et un gardiennage SSIAP toute l'année, depuis un nouveau PC Sécurité opérationnel depuis décembre 2024.
+> 481 détecteurs incendie, 56 caméras de vidéoprotection, 2 défibrillateurs et un gardiennage SSIAP toute l'année, depuis un nouveau PC Sécurité opérationnel depuis décembre 2025.
 >
 > En savoir plus 👉 https://uscppc.fr/erp-securite-incendie
 >
@@ -103,7 +103,7 @@ Publier dans cet ordre, puis **épingler la publication 1** (… → Épingler e
 
 > ✅ Depuis 2022, la Commission Permanente a mené de nombreux chantiers :
 > • gardiennage SSI remis à niveau et assuré toute l'année ;
-> • nouveau PC Sécurité opérationnel depuis le 1ᵉʳ décembre 2024 ;
+> • nouveau PC Sécurité opérationnel depuis le 1ᵉʳ décembre 2025 ;
 > • éclairage LED dans toute la galerie, coupé hors saison ;
 > • vidéoprotection : autorisation préfectorale récupérée, 56 caméras ;
 > • entretien courant : contrat technique, portes, 2 défibrillateurs ;
