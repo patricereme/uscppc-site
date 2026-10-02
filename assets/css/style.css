@@ -85,6 +85,17 @@ li { margin-bottom: .35rem; }
   color: var(--navy);
   letter-spacing: .02em;
 }
+.top-strip-right {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+}
+.top-strip .social-link {
+  display: block;
+  line-height: 0;
+  transition: transform .15s ease;
+}
+.top-strip .social-link:hover { transform: scale(1.1); }
 
 /* ---------- Barre d'onglets rouge (style La Plagne) — logo + nav + contact réunis ---------- */
 .tab-bar {
