@@ -90,12 +90,6 @@ li { margin-bottom: .35rem; }
   align-items: center;
   gap: .9rem;
 }
-.top-strip .social-link {
-  display: block;
-  line-height: 0;
-  transition: transform .15s ease;
-}
-.top-strip .social-link:hover { transform: scale(1.1); }
 
 /* ---------- Barre d'onglets rouge (style La Plagne) — logo + nav + contact réunis ---------- */
 .tab-bar {
@@ -171,6 +165,19 @@ li { margin-bottom: .35rem; }
   color: var(--rouge-plagne-dark);
   border-color: #fff;
 }
+.tab-bar .header-social {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  margin-left: .6rem;
+}
+.tab-bar .header-social a {
+  padding: 0;
+  border: none;
+  line-height: 0;
+  transition: transform .15s ease;
+}
+.tab-bar .header-social a:hover { background: none; transform: scale(1.12); }
 .nav-toggle {
   display: none;
   background: none;
@@ -428,6 +435,7 @@ footer .legal-line {
   .grid.cols-2, .grid.cols-3, .grid.cols-4 { grid-template-columns: 1fr; }
   .hero h1 { font-size: 1.6rem; }
   .nav-toggle { display: block; }
+  .tab-bar .header-social { margin: .5rem 0 .3rem .8rem; }
   .tab-bar nav {
     display: none;
     flex-direction: column;

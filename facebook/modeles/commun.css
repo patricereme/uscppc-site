@@ -22,3 +22,9 @@ html,body{overflow:hidden;font-family:Calibri,Candara,"Segoe UI",Arial,sans-seri
 .list li{font-size:31px;line-height:1.25;padding-left:44px;position:relative}
 .list li::before{content:"";position:absolute;left:0;top:9px;width:22px;height:22px;background:var(--rouge);border-radius:4px}
 .list li b{color:var(--navy)}
+/* Variante Instagram 1080x1350 (4:5) : ouvrir le modèle avec #ig */
+html.ig body{height:1350px!important}
+html.ig .post{height:1350px}
+html.ig .post main{justify-content:center}
+html.ig .stats{flex:none}
+html.ig .stat{padding:44px 30px 40px}
