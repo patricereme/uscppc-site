@@ -4,6 +4,30 @@
   "redirects": [
     {
       "source": "/",
+      "has": [{ "type": "host", "value": "uscppc.cloud" }],
+      "destination": "https://u.pcloud.link/publink/show?code=kZOkkuJZpcEjRO4fxyp73FyjqsgTARUh3jJX",
+      "permanent": false
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "uscppc.cloud" }],
+      "destination": "https://u.pcloud.link/publink/show?code=kZOkkuJZpcEjRO4fxyp73FyjqsgTARUh3jJX",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.uscppc.cloud" }],
+      "destination": "https://u.pcloud.link/publink/show?code=kZOkkuJZpcEjRO4fxyp73FyjqsgTARUh3jJX",
+      "permanent": false
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.uscppc.cloud" }],
+      "destination": "https://u.pcloud.link/publink/show?code=kZOkkuJZpcEjRO4fxyp73FyjqsgTARUh3jJX",
+      "permanent": false
+    },
+    {
+      "source": "/",
       "has": [{ "type": "host", "value": "www.uscppc.fr" }],
       "destination": "https://uscppc.fr/",
       "permanent": true
