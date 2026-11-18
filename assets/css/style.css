@@ -446,3 +446,39 @@ footer .legal-line {
   .person-list li { flex-direction: column; gap: .2rem; }
   .doc-list li { flex-direction: column; align-items: flex-start; gap: .3rem; }
 }
+
+/* ---------- Encart "Nouveau" (clignote ~5 s puis reste en surbrillance) ---------- */
+.flash-new {
+  background: #FFF4D6;
+  border-left: 6px solid var(--rouge-plagne);
+  border-radius: 6px;
+  padding: 1rem 1.3rem;
+  margin: 1rem 0 1.5rem;
+  animation: flash-pulse 1.2s ease-in-out 4;
+}
+.flash-new p { margin: 0 0 .5rem; }
+.flash-new ul { margin: 0; }
+.flash-new .flash-badge {
+  display: inline-block;
+  background: var(--rouge-plagne);
+  color: #fff;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: .15rem .6rem;
+  border-radius: 4px;
+  margin-right: .6rem;
+  animation: flash-badge 1.2s ease-in-out 4;
+}
+@keyframes flash-pulse {
+  0%, 100% { background: #FFF4D6; box-shadow: 0 0 0 0 rgba(226, 0, 32, 0); }
+  50% { background: #FFD98A; box-shadow: 0 0 0 6px rgba(226, 0, 32, .25); }
+}
+@keyframes flash-badge {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flash-new, .flash-new .flash-badge { animation: none; }
+}
