@@ -482,3 +482,12 @@ footer .legal-line {
 @media (prefers-reduced-motion: reduce) {
   .flash-new, .flash-new .flash-badge { animation: none; }
 }
+
+/* ---------- Bandeau d'annonce fermable ---------- */
+.call-banner { background: var(--orange); color: var(--navy); font-size: .98rem; }
+.call-banner[hidden] { display: none; }
+.call-banner-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-top: .6rem; padding-bottom: .6rem; }
+.call-banner p { margin: 0; }
+.call-banner a { color: var(--navy); font-weight: 700; text-decoration: underline; }
+.call-banner-close { background: none; border: 0; color: var(--navy); font-size: 1.5rem; line-height: 1; cursor: pointer; padding: .1rem .5rem; border-radius: 4px; }
+.call-banner-close:hover { background: rgba(31, 56, 100, .15); }
